@@ -31,3 +31,9 @@ The desire to mix music and technology made us think of making a harp with laser
 Our motivation due to this project: for my part (Samuel Missonnier) it is the music being a composer as well as the learning of electronics as well as Arduino and for Benjamin Nouzille the use of electronics (in particular the lasers) and learning about Arduino technology.
 
 The final result of this project will be a harp where the strings will be replaced by laser diodes, by cutting the emission of the laser to the receiver by our hand a musical note will be emitted, it will be possible to choose a certain type of instrument ( harp, piano…).
+
+## Contributors
+
+Benjamin Nouzille - benjamin.nouzille@epitech.eu
+
+Samuel Missonier - samuel.missonier@epitech.eu
