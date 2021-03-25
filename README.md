@@ -4,15 +4,18 @@
 
 A free project produced during our third year at epitech which aimed to produce a harp where the strings would be replaced by lasers.
 
-Operation is simple, once a laser beam is obstructed, an arduino board will detect the action and send a midi signal to computer software such as frutiloops studio
+Operation is simple, once a laser beam is obstructed, an arduino board will detect the action and send a midi signal to computer software such as frutiloops studio.
 
 ## How to use:
 
-- First of all install and start fl studio
+- First of all, install fl studio and arduino.
+
+- televerse the arduino program linkQtFlstudio in the arduino card.
+
 
 - Start the project with the executable LaserHarp.exe.
 
-- Select the manual mode or the automatic mode.
+- Select the automatic mode or the manual mode.
 
 
 ### Manual mode:
