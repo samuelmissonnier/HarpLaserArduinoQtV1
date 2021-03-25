@@ -29,6 +29,10 @@ Operation is simple, once a laser beam is obstructed, an arduino board will dete
 - Once the notes are set, you can press the "send" button to send the series of notes which will be played on the computer music software.
 
 
+### Important /!\
+
+- Before quit the app, don't forget to go back on the home page.
+
 ## Why this project ?
 
 The desire to mix music and technology made us think of making a harp with lasers. By researching on the internet we learned that this technology already existed. Seeing the final result that this could give we decided to make our own “Laser Harp”.
@@ -41,4 +45,4 @@ The final result of this project will be a harp where the strings will be replac
 
 Benjamin Nouzille - benjamin.nouzille@epitech.eu
 
-Samuel Missonier - samuel.missonier@epitech.eu
+Samuel Missonnier - samuel.missonnier@epitech.eu
