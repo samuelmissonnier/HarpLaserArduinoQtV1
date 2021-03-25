@@ -1,4 +1,4 @@
-# HarpLaserArduinoQtV1
+# LaserHarpQTArduinoV1
 
 ## LaserHarp:
 
