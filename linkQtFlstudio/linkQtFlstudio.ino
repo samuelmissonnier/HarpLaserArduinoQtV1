@@ -2,163 +2,104 @@
 #include <stdio.h>
 #include <string.h>
 
-int velocity = 100;//velocity of MIDI notes, must be between 0 and 127
- //(higher velocity usually makes MIDI instruments louder)
- 
-int noteON = 144;//144 = 10010000 in binary, note on command
-
+int velocity = 100;
+int noteON = 144;
 String getAnswQt;
 String getAnswQtBrak;
+String str;
 int c5 = A0;
+int e5 = A1;
+int g5 = A2;
+int b5 = A3;
+int e6 = A4;
+int g6 = A5;
 int rcvc5 = 0;
-String test = "12 24 36 48";
-//int e5 = A1;
-//int g5 = A2;
-//int  =   A3
-//int A4 = 
-//int A5 = 
-//int rcve5 = 0;
-//int rcvg5 = 0;
-
-
-
-  /*while (ptr != NULL)
-  {
-    printf("'%s'\n", ptr);
-    ptr = strtok(NULL, delim);
-  }*/
+int rcve5 = 0;
+int rcvg5 = 0;
+int rcvb5 = 0;
+int rcve6 = 0;
+int rcvg6 = 0;
 
 void setup() {
-  //  Set MIDI baud rate:
-  //Serial.begin(9600);
   Serial.begin(31250);
   pinMode(c5, INPUT);
-  /*String test = "salut ca va ?";
-  int str_len = test.length() + 1;  
-  char char_array[str_len];
-  test.toCharArray(char_array, str_len);
-  char *ptr = strtok(char_array, " ");
-  while (ptr != NULL)
-  {
-    Serial.println(ptr);
-    ptr = strtok(NULL, " ");
-  }*/
-  //pinMode(e5, INPUT);
-  //pinMode(g5, INPUT);
+  pinMode(e5, INPUT);
+  pinMode(g5, INPUT);
+  pinMode(b5, INPUT);
+  pinMode(e6, INPUT);
+  pinMode(g6, INPUT);
 }
-                  //60      //c5
+
 void activateNoteManual(int note, int input)
 {
   int rcv = analogRead(input);
-  if (rcv == 0) {
-    MIDImessage(noteON, note, velocity);//turn note on
-    delay(300);//hold note for 300ms
+  if (rcv < 30) {
+    MIDImessage(noteON, note, velocity);
+    //delay(100);
   } else {
-    MIDImessage(noteON, note, 0);//turn note off
-    delay(300);//wait 200ms until triggering next note
+    MIDImessage(noteON, note, 0);
+    //delay(100);
   }
 }
 
 void activateNoteAuto(int note)
 {
-  MIDImessage(noteON, note, velocity);//turn note on
+  MIDImessage(noteON, note, velocity);//turn note on // quand on enlève le delay les notes se jouent en même temps 
+  // le principe est simple le delay permet d'espacer les notes autrement on ne peut pas
+  //---------------------------------------------------------------------------------------------
+  //------- poser la question a jeremy comment sans delay jouer les notes une par une ? ---------
+  //---------------------------------------------------------------------------------------------
   delay(300);//hold note for 300ms
   MIDImessage(noteON, note, 0);//turn note on
   delay(300);//hold note for 300ms
 }
 
-void loop() {
-  if (Serial.available() > 0) {
-    getAnswQt = Serial.readString();
-    while (getAnswQt == "no") {
-        MIDImessage(noteON, 60, 0);//turn note off
-    }
-    while (getAnswQt == "Manual") {
-      getAnswQtBrak = Serial.readString();
+void manualLoop()
+{
+  while (getAnswQt == "Manual") {
+      //activateNoteAuto(12);
+      if (Serial.available() > 0)
+        getAnswQtBrak = Serial.readString();
       if (getAnswQtBrak == "no")
         break;
       activateNoteManual(60, c5);
+      activateNoteManual(64, e5);
+      activateNoteManual(67, g5);
+      activateNoteManual(71, b5);
+      activateNoteManual(76, e6);
+      activateNoteManual(79, g6);
     }
-    while (getAnswQt != "Manual") {
+}
+
+void automaticLoop()
+{
+  while (getAnswQt == "Auto") {
+      //activateNoteAuto(84);
       getAnswQtBrak = Serial.readString();
       if (getAnswQtBrak == "no")
         break;
       if (getAnswQtBrak != 0) {
-        test = getAnswQtBrak;
-        int str_len = test.length() + 1;  
+        str = getAnswQtBrak;
+        int str_len = str.length() + 1;  
         char char_array[str_len];
-        test.toCharArray(char_array, str_len);
+        str.toCharArray(char_array, str_len);
         char *ptr = strtok(char_array, " ");
         while (ptr != NULL)
         {
           activateNoteAuto(atoi(ptr));
-          //Serial.println(ptr);
           ptr = strtok(NULL, " ");
         }
-        //activateNoteAuto(60);
       }
-    } 
-  }
-    //rcvc5 = analogRead(c5);
-    //rcve5 = analogRead(e5);
-    //rcvg5 = analogRead(g5);
-    //Serial.println(rcvc5);
- 
-    //if (rcve5 < 25) {
-    //  MIDImessage(noteON, 64, velocity);//turn note on
-    //  delay(300);//hold note for 300ms
-    //} else {
-    //  MIDImessage(noteON, 64, 0);//turn note off
-    //  delay(300);//wait 200ms until triggering next note
-    //}
-    //if (rcvg5 < 25) {
-    //  MIDImessage(noteON, 67, velocity);//turn note on
-    //  delay(300);//hold note for 300ms
-    //} else {
-    //  MIDImessage(noteON, 67, 0);//turn note off
-    //  delay(300);//wait 200ms until triggering next note
-    //}
-    
-
-    
-    /*MIDImessage(noteON, 64, velocity);//turn note on
-    delay(300);//hold note for 300ms
-    MIDImessage(noteON, 64, 0);//turn note off
-    delay(200);//wait 200ms until triggering next note
-    
-    
-    MIDImessage(noteON, 67, velocity);//turn note on
-    delay(300);//hold note for 300ms
-    MIDImessage(noteON, 67, 0);//turn note off
-    delay(200);//wait 200ms until triggering next note
-
-    
-    MIDImessage(noteON, 71, velocity);//turn note on
-    delay(300);//hold note for 300ms
-    MIDImessage(noteON, 71, 0);//turn note off
-    delay(200);//wait 200ms until triggering next note
-    
-    MIDImessage(noteON, 76, velocity);//turn note on
-    delay(300);//hold note for 300ms
-    MIDImessage(noteON, 76, 0);//turn note off
-    delay(200);//wait 200ms until triggering next note
-    
-    
-    MIDImessage(noteON, 79, velocity);//turn note on
-    delay(300);//hold note for 300ms
-    MIDImessage(noteON, 79, 0);//turn note off
-    delay(200);//wait 200ms until triggering next note*/
-  
-  
-  /*for (int note=60 ;note <= 70 ; note++) {//from note 50 (D3) to note 69 (A4)
-    MIDImessage(noteON, note, velocity);//turn note on
-    delay(300);//hold note for 300ms
-    MIDImessage(noteON, note, 0);//turn note off
-    delay(200);//wait 200ms until triggering next note
-  }*/
+   }
 }
-   
- 
+
+void loop() {
+  if (Serial.available() > 0) {
+    getAnswQt = Serial.readString();
+    manualLoop();
+    automaticLoop();
+  }
+}
 
 //send MIDI message
 void MIDImessage(int command, int MIDInote, int MIDIvelocity) 

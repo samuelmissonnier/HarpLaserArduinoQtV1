@@ -7,52 +7,29 @@ Automaticpage::Automaticpage(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->Homebutton2->setFixedSize(45, 45);
-    ui->Homebutton2->setIcon(QIcon("C:/Users/Samuel/Desktop/LaserHarpV1/rsc/previous-black.png"));
+    ui->Homebutton2->setIcon(QIcon("./rsc/previous-black.png"));
     ui->Homebutton2->setIconSize(QSize(60, 60));
     ui->errorMessage->hide();
-    arduino_is_available = false;
-    arduino_port_name = "";
-    arduino = new QSerialPort;
-
-    foreach(const QSerialPortInfo &serialPortInfo, QSerialPortInfo::availablePorts()){
-        if(serialPortInfo.hasVendorIdentifier() && serialPortInfo.hasProductIdentifier()){
-            if(serialPortInfo.vendorIdentifier() == arduino_uno_vendor_id){
-                if(serialPortInfo.productIdentifier() == arduino_uno_product_id){
-                    arduino_port_name = serialPortInfo.portName();
-                    arduino_is_available = true;
-                }
-            }
-        }
-    }
-    if(arduino_is_available){
-        // open and configure the serialport
-        arduino->setPortName(arduino_port_name);
-        arduino->open(QSerialPort::WriteOnly);
-        arduino->setBaudRate(31250);
-        arduino->setDataBits(QSerialPort::Data8);
-        arduino->setParity(QSerialPort::NoParity);
-        arduino->setStopBits(QSerialPort::OneStop);
-        arduino->setFlowControl(QSerialPort::NoFlowControl);
-    } else
-        QMessageBox::warning(this, "Port error", "Couldn't find the Arduino!");
 }
 
 Automaticpage::~Automaticpage()
 {
-    if(arduino->isOpen()){
-        arduino->close();
-    }
     delete ui;
+}
+
+void Automaticpage::setArduinoComponent(QSerialPort *arduino)
+{
+    _arduino = arduino;
 }
 
 void Automaticpage::on_Homebutton2_clicked()
 {
     qint64 bw = 0;
 
-    if (arduino->isWritable()){
-        qDebug() << "je suis passé par ici tu connais les bails mon vieux";
-        bw = arduino->write("no");
+    if (_arduino->isWritable()){
+        bw = _arduino->write("no");
         qDebug() << bw << "byte(s) written ";
+        _arduino->flush();
     } else
         qDebug() << "Couldn't write to serial!";
     emit homeClicked();
@@ -61,11 +38,6 @@ void Automaticpage::on_Homebutton2_clicked()
 void Automaticpage::endTempo()
 {
     ui->errorMessage->hide();
-}
-
-void Automaticpage::doNothing()
-{
-    std::cerr << "nothing" << std::endl;
 }
 
 int Automaticpage::convertIntoNb(std::string note)
@@ -133,18 +105,14 @@ void Automaticpage::on_pushButton_clicked()
     } else {
         note = convertVnoteNb(_vnote);
         std::cerr << "note = ---" << note << "---" << std::endl;
-        if (arduino->isWritable()){
-                bw = arduino->write(note.c_str());
-                //bw = arduino->write("test");
+        if (_arduino->isWritable()){
+                bw = _arduino->write(note.c_str());
                 qDebug() << bw << "byte(s) written ";
-                //std::cerr << "bw = " << bw << std::endl;
-                //std::cerr << "teetetetetetettetete" << std::endl;
+                _arduino->flush();
         } else {
             qDebug() << "Couldn't write to serial!";
         }
     }
-        //std::cerr << "there is an invalid note in your text zone" << std::endl;
-    //std::cerr << "contenu saisie = " << note << std::endl;
 }
 
 bool Automaticpage::checkSpecificCase(std::vector<std::string> notes)
@@ -200,9 +168,6 @@ bool Automaticpage::checkNoteValid(std::vector<std::string> notes)
 bool Automaticpage::parseString(std::string notes)
 {
 
-    /*for (size_t i = 0; i != _vnote.size(); i++) {
-        std::cerr << "_vnote[i] = ------" << _vnote[i] << "-----" << std::endl;
-    }*/
     if (checkLen(_vnote) == false)
         return false;
     if (checkNoteValid(_vnote) == false)
@@ -215,11 +180,3 @@ bool Automaticpage::parseString(std::string notes)
     }
     return true;
 }
-//----- PARSEUR ETAPE -----//
-//1) parser les char dispos ok
-//2) split chaque note dans un std::vector<std::string> ok
-//3) verifier que chaque note est une len de 2 ou 3 autrement erreur ok
-//4) verifier que si la taille est de 3 c'est bien lettre dièze chiffre ok
-//5) verifier que si la taille est de 2 c'est bien lettre chiffre ok
-//6) si e + chiffre est supérieur à 3 faux pareil pour B5 ok
-//7) si un chiffre est supérieur supérieur à 10 erreur ko

@@ -18,6 +18,7 @@ class Manualpage : public QWidget
 public:
     explicit Manualpage(QWidget *parent = nullptr);
     ~Manualpage();
+    void setArduinoComponent(QSerialPort *arduino);
 
 private slots:
     void on_Homebutton_clicked();
@@ -29,11 +30,7 @@ signals:
 
 private:
     Ui::Manualpage *ui;
-    QSerialPort *arduino;
-    static const quint16 arduino_uno_vendor_id = 9025;
-    static const quint16 arduino_uno_product_id = 67;
-    QString arduino_port_name;
-    bool arduino_is_available;
+    QSerialPort *_arduino;
 };
 
 #endif // MANUALPAGE_H

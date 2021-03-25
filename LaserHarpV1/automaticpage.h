@@ -24,6 +24,7 @@ class Automaticpage : public QWidget
 public:
     explicit Automaticpage(QWidget *parent = nullptr);
     ~Automaticpage();
+    void setArduinoComponent(QSerialPort *arduino);
 
 
 signals:
@@ -36,18 +37,12 @@ private slots:
 
     void endTempo();
 
-    void doNothing();
-
 private:
     Ui::Automaticpage *ui;
     QTimer *_timer;
     std::vector<std::string> _vnote;
     std::vector<std::string> _vnoteNb;
-    QSerialPort *arduino;
-    static const quint16 arduino_uno_vendor_id = 9025;
-    static const quint16 arduino_uno_product_id = 67;
-    QString arduino_port_name;
-    bool arduino_is_available;
+    QSerialPort *_arduino;
 
 private:
     bool checkLen(std::vector<std::string> numbers);
