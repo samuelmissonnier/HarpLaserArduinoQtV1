@@ -8,7 +8,9 @@ Operation is simple, once a laser beam is obstructed, an arduino board will dete
 
 ## How to use:
 
-- First Start the project with the executable LaserHarp.exe.
+- First of all install and start fl studio
+
+- Start the project with the executable LaserHarp.exe.
 
 - Select the manual mode or the automatic mode.
 
