@@ -15,7 +15,7 @@ Operation is simple, once a laser beam is obstructed, an arduino board will dete
 
 ### Manual mode:
 
-- Once you are on the manual mode, you just have to pass your hand through the lasers in order to play the different sounds attributed to them.
+- Once you are on the manual mode, you just have to press the "start" button and pass your hand through the lasers in order to play the different sounds attributed to them.
 
 ### Automatic mode:
 
