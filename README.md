@@ -1,5 +1,13 @@
 # HarpLaserArduinoQtV1
 
+## LaserHarp:
 
-First Start the project with the executable LaserHarp.exe
 
+## How to use:
+
+- First Start the project with the executable LaserHarp.exe.
+
+- Select the manual mode or the automatic mode.
+
+
+### Manual mode:
