@@ -43,6 +43,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    qint64 bw = 0;
+
+    if (_arduino->isWritable()){
+        bw = _arduino->write("Stop");
+        qDebug() << bw << "byte(s) written ";
+        _arduino->flush();
+    } else
+        qDebug() << "Couldn't write to serial!";
     if(_arduino->isOpen()){
         _arduino->close();
     }
