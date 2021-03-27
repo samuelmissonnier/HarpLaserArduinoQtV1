@@ -10,12 +10,19 @@ Operation is simple, once a laser beam is obstructed, an arduino board will dete
 
 - First of all, install fl studio and arduino.
 
-- televerse the arduino program linkQtFlstudio in the arduino card.
+- Download the laserharp application on this link : https://mega.nz/file/Bs4UiRLb#QB0Ioh-CdMwjzNtau4BtyKH7m5LyN9ZfPZYFHF95R7k
 
+- Connect the battery.
 
-- Start the project with the executable LaserHarp.exe.
+- Televerse the arduino program linkQtFlstudio in the arduino card.
 
-- Select the automatic mode or the manual mode.
+Without Application:
+  - You can play manually the harp by passing your hands through the lasers.
+
+With the application:
+  - Start the app previously downloaded with the executable LaserHarp.exe.
+
+  - Select the automatic mode or the manual mode.
 
 
 ### Manual mode:
