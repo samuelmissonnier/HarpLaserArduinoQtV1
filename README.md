@@ -14,6 +14,8 @@ Operation is simple, once a laser beam is obstructed, an arduino board will dete
 
 - Connect the battery.
 
+- Connect the midi cable to your computer.
+
 - Televerse the arduino program linkQtFlstudio in the arduino card.
 
 Without Application:
